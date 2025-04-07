@@ -1,0 +1,3 @@
+Run this command to install the React Native WebView package:
+
+npx expo install react-native-webview
