@@ -1,0 +1,3 @@
+Run this command to install AsyncStorage for React Native:
+
+npx expo install @react-native-async-storage/async-storage

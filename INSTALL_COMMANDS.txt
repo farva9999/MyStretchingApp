@@ -1,0 +1,4 @@
+Run these commands to install the required navigation packages:
+
+npm install @react-navigation/native @react-navigation/bottom-tabs
+npx expo install react-native-screens react-native-safe-area-context

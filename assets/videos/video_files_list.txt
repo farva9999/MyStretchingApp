@@ -1,0 +1,199 @@
+MP4 Files in Directory 
+============================= 
+ 
+File: arm-circle.mp4 
+Size: 475034 bytes 
+Last Modified: 11/15/2023 10:11 AM 
+ 
+File: arm-circles2.mp4 
+Size: 749438 bytes 
+Last Modified: 11/15/2023 11:55 AM 
+ 
+File: arm-extension.mp4 
+Size: 1023832 bytes 
+Last Modified: 11/15/2023 11:54 AM 
+ 
+File: arm-raise.mp4 
+Size: 230048 bytes 
+Last Modified: 11/15/2023 11:53 AM 
+ 
+File: arm-raise2.mp4 
+Size: 313014 bytes 
+Last Modified: 11/15/2023 11:54 AM 
+ 
+File: arm-stretch-wall.mp4 
+Size: 264420 bytes 
+Last Modified: 11/15/2023 11:54 AM 
+ 
+File: arm-swing.mp4 
+Size: 1093131 bytes 
+Last Modified: 11/15/2023 11:53 AM 
+ 
+File: arms-back.mp4 
+Size: 333100 bytes 
+Last Modified: 11/15/2023 11:54 AM 
+ 
+File: arms-behind.mp4 
+Size: 180877 bytes 
+Last Modified: 11/15/2023 11:50 AM 
+ 
+File: back-shoulder-reach.mp4 
+Size: 342275 bytes 
+Last Modified: 11/15/2023 11:50 AM 
+ 
+File: calf-stretch.mp4 
+Size: 542110 bytes 
+Last Modified: 11/15/2023 11:51 AM 
+ 
+File: cat-pose.mp4 
+Size: 580838 bytes 
+Last Modified: 11/15/2023 11:54 AM 
+ 
+File: cat-stretch.mp4 
+Size: 580838 bytes 
+Last Modified: 11/07/2023 03:15 PM 
+ 
+File: childs-pose.mp4 
+Size: 1244342 bytes 
+Last Modified: 11/15/2023 11:51 AM 
+ 
+File: dab-stretch.mp4 
+Size: 228193 bytes 
+Last Modified: 11/15/2023 11:51 AM 
+ 
+File: donkey-kick.mp4 
+Size: 1610492 bytes 
+Last Modified: 11/15/2023 11:51 AM 
+ 
+File: fire-hydrant.mp4 
+Size: 471352 bytes 
+Last Modified: 11/15/2023 11:54 AM 
+ 
+File: forearm-stretch.mp4 
+Size: 640086 bytes 
+Last Modified: 11/15/2023 11:52 AM 
+ 
+File: forward-backward-bend.mp4 
+Size: 587821 bytes 
+Last Modified: 11/15/2023 11:53 AM 
+ 
+File: forward-leg-stretch.mp4 
+Size: 468173 bytes 
+Last Modified: 11/15/2023 11:52 AM 
+ 
+File: hip-thrust.mp4 
+Size: 1142015 bytes 
+Last Modified: 11/15/2023 11:53 AM 
+ 
+File: lean-back.mp4 
+Size: 1031673 bytes 
+Last Modified: 11/15/2023 11:52 AM 
+ 
+File: leg-raise-extend.mp4 
+Size: 603576 bytes 
+Last Modified: 11/15/2023 11:53 AM 
+ 
+File: lunge-far.mp4 
+Size: 1866656 bytes 
+Last Modified: 11/15/2023 11:53 AM 
+ 
+File: lunge-twist.mp4 
+Size: 1564800 bytes 
+Last Modified: 11/15/2023 11:52 AM 
+ 
+File: lunge.mp4 
+Size: 950172 bytes 
+Last Modified: 11/15/2023 11:53 AM 
+ 
+File: one-leg-squat.mp4 
+Size: 1651042 bytes 
+Last Modified: 11/15/2023 11:51 AM 
+ 
+File: quad-stretch.mp4 
+Size: 304563 bytes 
+Last Modified: 11/15/2023 11:54 AM 
+ 
+File: raise-arm-twist.mp4 
+Size: 609408 bytes 
+Last Modified: 11/15/2023 11:50 AM 
+ 
+File: reach-arm-leg.mp4 
+Size: 1617814 bytes 
+Last Modified: 11/15/2023 11:51 AM 
+ 
+File: reverse-arm-raise.mp4 
+Size: 537320 bytes 
+Last Modified: 11/15/2023 11:50 AM 
+ 
+File: reverse-lunge.mp4 
+Size: 607987 bytes 
+Last Modified: 11/15/2023 11:51 AM 
+ 
+File: rotate-core.mp4 
+Size: 560553 bytes 
+Last Modified: 11/15/2023 11:52 AM 
+ 
+File: side-bend.mp4 
+Size: 471145 bytes 
+Last Modified: 11/15/2023 11:54 AM 
+ 
+File: side-plank-extend.mp4 
+Size: 2261630 bytes 
+Last Modified: 11/15/2023 11:51 AM 
+ 
+File: side-twist.mp4 
+Size: 409712 bytes 
+Last Modified: 11/15/2023 11:52 AM 
+ 
+File: side-twist2.mp4 
+Size: 1539503 bytes 
+Last Modified: 11/15/2023 11:52 AM 
+ 
+File: side-twist3.mp4 
+Size: 322746 bytes 
+Last Modified: 11/15/2023 11:53 AM 
+ 
+File: sphinx.mp4 
+Size: 432820 bytes 
+Last Modified: 11/15/2023 11:51 AM 
+ 
+File: sphinx2.mp4 
+Size: 789126 bytes 
+Last Modified: 11/15/2023 11:52 AM 
+ 
+File: sphinx3.mp4 
+Size: 526924 bytes 
+Last Modified: 11/15/2023 11:53 AM 
+ 
+File: squat-raise-leg.mp4 
+Size: 1141599 bytes 
+Last Modified: 11/15/2023 11:50 AM 
+ 
+File: squat-turn.mp4 
+Size: 495193 bytes 
+Last Modified: 11/15/2023 11:55 AM 
+ 
+File: squat.mp4 
+Size: 1311453 bytes 
+Last Modified: 11/15/2023 11:53 AM 
+ 
+File: supermanstretch.mp4 
+Size: 429631 bytes 
+Last Modified: 11/01/2023 11:37 AM 
+ 
+File: supermanstretch2.mp4 
+Size: 260459 bytes 
+Last Modified: 11/01/2023 11:39 AM 
+ 
+File: tricep-stretch.mp4 
+Size: 208866 bytes 
+Last Modified: 11/15/2023 11:55 AM 
+ 
+File: wall-arm-raise.mp4 
+Size: 180256 bytes 
+Last Modified: 11/15/2023 11:51 AM 
+ 
+File: wall-squat.mp4 
+Size: 973788 bytes 
+Last Modified: 11/15/2023 11:52 AM 
+ 
