@@ -4,7 +4,13 @@
       "android": {
         "buildType": "apk",
         "gradleCommand": ":app:assembleDebug"
-      }
+      },
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://myapi.example.com"
+      },
+      "autoIncrement": true,
+      "distribution": "internal",
+      "channel": "preview"
     },
     "preview2": {
       "android": {
@@ -14,6 +20,13 @@
     "preview3": {
       "developmentClient": true
     },
-    "production": {}
+    "production": {
+      "android": {
+        "buildType": "apk",
+        "image": "latest"
+      },
+      "distribution": "store",
+      "channel": "production"
+    }
   }
 }

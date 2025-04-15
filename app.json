@@ -28,7 +28,8 @@
         "ACCESS_NETWORK_STATE",
         "READ_EXTERNAL_STORAGE",
         "WRITE_EXTERNAL_STORAGE"
-      ]
+      ],
+      "jsEngine": "hermes"
     },
     "web": {
       "favicon": "./assets/favicon.png"
