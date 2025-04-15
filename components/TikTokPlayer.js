@@ -8,7 +8,8 @@ import {
   Dimensions,
   Platform,
   Modal,
-  Image
+  Image,
+  Alert
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -34,7 +35,18 @@ const TikTokPlayer = ({ videoId, creator, title, description }) => {
     const fetchTikTokData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`https://www.tiktok.com/oembed?url=${encodeURIComponent(tiktokUrl)}`);
+        setError(false);
+        
+        // Add timeout to prevent hanging requests
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
+        
+        const response = await fetch(
+          `https://www.tiktok.com/oembed?url=${encodeURIComponent(tiktokUrl)}`,
+          { signal: controller.signal }
+        );
+        
+        clearTimeout(timeoutId);
         
         if (!response.ok) {
           throw new Error(`API request failed with status ${response.status}`);
@@ -46,11 +58,11 @@ const TikTokPlayer = ({ videoId, creator, title, description }) => {
         setThumbnailUrl(data.thumbnail_url);
         setEmbedHtml(data.html);
         setVideoInfo(data);
-        
-        setError(false);
       } catch (error) {
         console.error('Error fetching TikTok data:', error);
         setError(true);
+        // Use a default thumbnail if available
+        setThumbnailUrl(require('../assets/tiktok-placeholder.png'));
       } finally {
         setLoading(false);
       }
@@ -67,7 +79,57 @@ const TikTokPlayer = ({ videoId, creator, title, description }) => {
 
   // HTML content for the WebView using the official embed code
   const createHtmlContent = () => {
-    if (embedHtml) {
+    try {
+      if (embedHtml) {
+        return `
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+              body {
+                margin: 0;
+                padding: 0;
+                background-color: #000;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                overflow: hidden;
+              }
+              .tiktok-container {
+                width: 100%;
+                max-width: 605px;
+                margin: 0 auto;
+              }
+              .error-container {
+                padding: 20px;
+                text-align: center;
+                color: #fff;
+              }
+            </style>
+          </head>
+          <body>
+            <div class="tiktok-container">
+              ${embedHtml}
+            </div>
+            <script>
+              // Let React Native know when the page is loaded
+              window.addEventListener('load', function() {
+                window.ReactNativeWebView.postMessage('PAGE_LOADED');
+              });
+              
+              // Add error handling for iframes
+              window.addEventListener('error', function(e) {
+                window.ReactNativeWebView.postMessage('ERROR:' + e.message);
+              });
+            </script>
+          </body>
+          </html>
+        `;
+      }
+      
+      // Fallback to direct URL if embed code isn't available
       return `
         <!DOCTYPE html>
         <html>
@@ -77,66 +139,60 @@ const TikTokPlayer = ({ videoId, creator, title, description }) => {
             body {
               margin: 0;
               padding: 0;
-              background-color: #000;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              min-height: 100vh;
+              height: 100vh;
               overflow: hidden;
             }
-            .tiktok-container {
+            iframe {
               width: 100%;
-              max-width: 605px;
-              margin: 0 auto;
+              height: 100%;
+              border: none;
+            }
+            .error-text {
+              padding: 20px;
+              text-align: center;
+              color: #fff;
+              background-color: #000;
             }
           </style>
         </head>
         <body>
-          <div class="tiktok-container">
-            ${embedHtml}
-          </div>
+          <iframe src="${tiktokUrl}" frameborder="0" allow="autoplay; fullscreen" allowfullscreen onerror="handleFrameError()"></iframe>
           <script>
-            // Let React Native know when the page is loaded
-            window.addEventListener('load', function() {
+            function handleFrameError() {
+              document.body.innerHTML = '<div class="error-text">Unable to load TikTok content</div>';
+              window.ReactNativeWebView.postMessage('ERROR:iframe_load_failed');
+            }
+            
+            // Add timeout to detect loading issues
+            setTimeout(function() {
               window.ReactNativeWebView.postMessage('PAGE_LOADED');
-            });
+            }, 8000);
           </script>
         </body>
         </html>
       `;
+    } catch (e) {
+      console.error('Error creating HTML content:', e);
+      // Return a simple fallback
+      return `
+        <!DOCTYPE html>
+        <html>
+        <body style="background-color: #000; color: #fff; text-align: center; padding: 20px;">
+          <p>Unable to load TikTok content. Please try again later.</p>
+        </body>
+        </html>
+      `;
     }
-    
-    // Fallback to direct URL if embed code isn't available
-    return `
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <style>
-          body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            overflow: hidden;
-          }
-          iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-          }
-        </style>
-      </head>
-      <body>
-        <iframe src="${tiktokUrl}" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-      </body>
-      </html>
-    `;
   };
 
   const handleMessage = (event) => {
     const { data } = event.nativeEvent;
     
     if (data === 'PAGE_LOADED') {
+      setLoading(false);
+    } else if (data.startsWith('ERROR:')) {
+      console.error('WebView content error:', data);
+      setError(true);
       setLoading(false);
     }
   };
@@ -152,6 +208,15 @@ const TikTokPlayer = ({ videoId, creator, title, description }) => {
     console.error('WebView error:', e);
     setLoading(false);
     setError(true);
+    // Show a friendly fallback instead of crashing
+    if (modalVisible) {
+      // Only show alert if modal is visible to avoid multiple alerts
+      Alert.alert(
+        'Video Error',
+        'Unable to load TikTok content. Please check your internet connection or try again later.',
+        [{ text: 'OK', onPress: () => handleClosePlayer() }]
+      );
+    }
   };
 
   const handleOpenPlayer = () => {

@@ -61,7 +61,13 @@ const StretchDetail = ({ route, navigation }) => {
         [{ text: 'Great!', style: 'default' }]
       );
     } catch (error) {
-      console.log('Error recording stretch completion:', error);
+      console.error('Error recording stretch completion:', error);
+      // Show a user-friendly error message
+      Alert.alert(
+        'Storage Error',
+        'Unable to save your progress. The app will continue to work, but your stats may not be updated.',
+        [{ text: 'OK', style: 'default' }]
+      );
     }
   };
 
@@ -77,7 +83,9 @@ const StretchDetail = ({ route, navigation }) => {
         }
       }
     } catch (error) {
-      console.log('Error controlling video:', error);
+      console.error('Error controlling video:', error);
+      setVideoError(true);
+      Alert.alert('Video Error', 'There was a problem playing the video. Try restarting the app.');
     }
   };
 
@@ -91,7 +99,9 @@ const StretchDetail = ({ route, navigation }) => {
         await videoRef.current.setPositionAsync(0);
       }
     } catch (error) {
-      console.log('Error resetting video:', error);
+      console.error('Error resetting video:', error);
+      setVideoError(true);
+      Alert.alert('Video Error', 'There was a problem resetting the video. Try restarting the app.');
     }
   };
 
@@ -103,6 +113,11 @@ const StretchDetail = ({ route, navigation }) => {
 
   const renderVideo = () => {
     try {
+      // First check if the video file exists in the mapping
+      if (!videoMapping[stretch.videoFile]) {
+        throw new Error('Video file not found in mapping');
+      }
+      
       const videoSource = videoMapping[stretch.videoFile];
       
       return (
@@ -119,18 +134,18 @@ const StretchDetail = ({ route, navigation }) => {
           useNativeControls={false}
           onPlaybackStatusUpdate={status => setStatus(() => status)}
           onError={(error) => {
-            console.log('Video error:', error);
+            console.error('Video error:', error);
             setVideoError(true);
           }}
         />
       );
     } catch (error) {
-      console.log('Video loading error:', error);
+      console.error('Video loading error:', error);
       setVideoError(true);
       return (
         <View style={[styles.video, styles.videoError]}>
           <Text style={styles.videoErrorText}>
-            Video not available. Please ensure you have the correct video files in your assets folder.
+            Video not available. Please check that all video files are included in the build.
           </Text>
         </View>
       );

@@ -13,9 +13,26 @@ const STORAGE_KEYS = {
 // Get total count for a specific activity
 export const getActivityCount = async (activity) => {
   try {
-    const countKey = STORAGE_KEYS[`${activity.toUpperCase()}_COUNT`];
+    // Validate activity parameter
+    if (!activity || typeof activity !== 'string') {
+      console.error('Invalid activity parameter:', activity);
+      return 0;
+    }
+
+    const activityKey = `${activity.toUpperCase()}_COUNT`;
+    
+    // Verify the key exists in STORAGE_KEYS
+    if (!STORAGE_KEYS[activityKey]) {
+      console.error(`Unknown activity type: ${activity}`);
+      return 0;
+    }
+
+    const countKey = STORAGE_KEYS[activityKey];
     const countStr = await AsyncStorage.getItem(countKey);
-    return countStr ? parseInt(countStr) : 0;
+    
+    // Make sure we can parse the count
+    const parsedCount = countStr ? parseInt(countStr, 10) : 0;
+    return isNaN(parsedCount) ? 0 : parsedCount;
   } catch (error) {
     console.error(`Error getting ${activity} count:`, error);
     return 0;
@@ -25,10 +42,32 @@ export const getActivityCount = async (activity) => {
 // Increment count for a specific activity
 export const incrementActivityCount = async (activity) => {
   try {
-    const countKey = STORAGE_KEYS[`${activity.toUpperCase()}_COUNT`];
+    // Validate activity parameter
+    if (!activity || typeof activity !== 'string') {
+      console.error('Invalid activity parameter:', activity);
+      return 0;
+    }
+
+    const activityKey = `${activity.toUpperCase()}_COUNT`;
+    
+    // Verify the key exists in STORAGE_KEYS
+    if (!STORAGE_KEYS[activityKey]) {
+      console.error(`Unknown activity type: ${activity}`);
+      return 0;
+    }
+
+    const countKey = STORAGE_KEYS[activityKey];
     const currentCount = await getActivityCount(activity);
-    await AsyncStorage.setItem(countKey, (currentCount + 1).toString());
-    return currentCount + 1;
+    
+    // Use a try-catch block specifically for the setItem operation
+    try {
+      await AsyncStorage.setItem(countKey, (currentCount + 1).toString());
+      return currentCount + 1;
+    } catch (storageError) {
+      console.error(`Error saving to AsyncStorage:`, storageError);
+      // Return the current count since we couldn't increment it
+      return currentCount;
+    }
   } catch (error) {
     console.error(`Error incrementing ${activity} count:`, error);
     return 0;
@@ -38,17 +77,51 @@ export const incrementActivityCount = async (activity) => {
 // Record completion date for an activity
 export const recordActivityDate = async (activity) => {
   try {
-    const dateKey = STORAGE_KEYS[`${activity.toUpperCase()}_DATES`];
+    // Validate activity parameter
+    if (!activity || typeof activity !== 'string') {
+      console.error('Invalid activity parameter:', activity);
+      return [];
+    }
+
+    const activityKey = `${activity.toUpperCase()}_DATES`;
+    
+    // Verify the key exists in STORAGE_KEYS
+    if (!STORAGE_KEYS[activityKey]) {
+      console.error(`Unknown activity type: ${activity}`);
+      return [];
+    }
+
+    const dateKey = STORAGE_KEYS[activityKey];
     const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
     
-    // Get existing dates
-    const datesStr = await AsyncStorage.getItem(dateKey);
-    const dates = datesStr ? JSON.parse(datesStr) : [];
+    // Get existing dates with error handling for JSON parsing
+    let dates = [];
+    try {
+      const datesStr = await AsyncStorage.getItem(dateKey);
+      if (datesStr) {
+        dates = JSON.parse(datesStr);
+        // Validate that dates is an array
+        if (!Array.isArray(dates)) {
+          console.error('Stored dates is not an array:', dates);
+          dates = [];
+        }
+      }
+    } catch (parseError) {
+      console.error('Error parsing stored dates:', parseError);
+      // Continue with an empty array if parsing fails
+      dates = [];
+    }
     
     // Only add today if it's not already in the list
     if (!dates.includes(today)) {
       dates.push(today);
-      await AsyncStorage.setItem(dateKey, JSON.stringify(dates));
+      try {
+        await AsyncStorage.setItem(dateKey, JSON.stringify(dates));
+      } catch (saveError) {
+        console.error('Error saving dates to AsyncStorage:', saveError);
+        // Remove today from the array since we couldn't save it
+        dates.pop();
+      }
     }
     
     return dates;
